@@ -4,18 +4,11 @@ var Promise = require('bluebird');
 var PromiseRequest = Promise.method(function(options) {
     return new Promise(function(resolve, reject) { 
         var request = https.request(options, function(response) {
-            // Bundle the result
-            var result = {
-                'httpVersion': response.httpVersion,
-                'httpStatusCode': response.statusCode,
-                'headers': response.headers,
-                'body': '',
-                'trailers': response.trailers,
-            };
+            var body = '';
 
             // Build the body
             response.on('data', function(chunk) {
-                result.body += chunk;
+                body += chunk;
             });
 
             // Resolve the promise
