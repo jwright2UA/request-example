@@ -1,0 +1,26 @@
+{
+  "name": "request-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwright2UA/request-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwright2UA/request-example/issues"
+  },
+  "homepage": "https://github.com/jwright2UA/request-example#readme",
+  "dependencies": {
+    "bluebird": "^2.9.31",
+    "lodash": "^3.10.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
+}
