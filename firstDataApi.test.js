@@ -45,13 +45,19 @@ describe('First Data API', function () {
 			api = new FdApi();
 		});
 
-		it.skip('from github', function(){
+		it('from github', function(done){
+			var followers;
 			api.getProfile('bulkan').then(function(result){
-				console.log('inside the then', result);
-			})
-			.catch(function(err){
-				console.log('inside the catch', err);
-			});
+					console.log('inside the then', result.body);
+					followers = JSON.stringify(result.body);
+					assert.equal(followers.length, 4);
+					console.log(followers);
+					done();
+				})
+				.catch(function(err){
+					console.log('inside the catch', err);
+					done();
+				});
 		});
 
 		it('promise test passing', function () {

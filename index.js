@@ -19,8 +19,8 @@ function FirstDataApi(params) {
 
 }
 
-FirstDataApi.prototype.getProfile = function getProfile(username) {
-	console.log('inside getProfile');
+FirstDataApi.prototype.getProfile = Promise.method(function getProfile(username) {
+	console.log('inside getProfile', username);
 
 	var options = {
 		hostname: 'api.github.com',
@@ -33,35 +33,36 @@ FirstDataApi.prototype.getProfile = function getProfile(username) {
 		}
 	};
 
-	var PromiseRequest = Promise.method(function(options) {
-		return new Promise(function (resolve, reject) {
-			console.log('inside promise');
-			
-			var request = https.request(options, function(response) {
-				var result = '';
+	return new Promise(function (resolve, reject) {
+		console.log('inside promise');
+		
+		var request = https.request(options, function(response) {
+            // Bundle the result
+            var result = {
+                'httpVersion': response.httpVersion,
+                'httpStatusCode': response.statusCode,
+                'headers': response.headers,
+                'body': '',
+                'trailers': response.trailers,
+            };
 
-				response.on('data', function (chunk) {
-					result += chunk;
-				});
+            // Build the body
+            response.on('data', function(chunk) {
+                result.body += chunk;
+            });
 
-				resolve(result);
-			});
-
-			request.on('error', function(e) {
-				console.log('problem with request: ' + e.message);
-				reject(e);
-			});
-
-			request.end();
+            // Resolve the promise
+            resolve(result);
 		});
+
+		request.on('error', function(e) {
+			console.log('problem with request: ' + e.message);
+			reject(e);
+		});
+
+		request.end();
 	});
-
-	var myRequest = PromiseRequest(options).then(function(value){
-
-	});
-
-
-};
+});
 
 FirstDataApi.prototype.promiseTest = function promiseTest(pass) {
 	return new Promise(function (resolve, reject) {
