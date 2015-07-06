@@ -32,17 +32,11 @@ describe('HTTPS requests from node', function () {
 			return Promise.resolve(r.getProfile('bulkan'))
 				.then(function(response){
 					assert.equal(response.body.length, 30);
-				})
-				.catch(function(err){
-					assert.equal('200', err.statusCode, 'request failed');
 				});
 		});
 
 		it('from github and return an error for a profile not found', function(){
 			return Promise.resolve(r.getProfile('bulkan3w342423'))
-				.then(function(response){
-					assert.equal(response.body.length, 30);
-				})
 				.catch(function(err){
 					assert.equal('404', err.statusCode, 'returns correct status code on error');
 				});
