@@ -30,7 +30,12 @@ Request.prototype.getProfile = Promise.method(function getProfile(username) {
             });
 
             response.on('end', function() {
-                resolve(JSON.parse(body));
+            	var data = { 
+						statusCode: response.statusCode,
+						body: JSON.parse(body)
+					};
+
+				response.statusCode.toString()[0] === '2' ? resolve(data) : reject(data);
             });
 		});
 
